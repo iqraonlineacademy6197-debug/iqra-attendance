@@ -10,22 +10,16 @@
   "theme_color": "#0A0A0A",
   "icons": [
     {
-      "src": "1-shared-v5-any-192.png",
+      "src": "1-shared-v6-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "2-shared-v5-any-512.png",
+      "src": "2-shared-v6-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
-    },
-    {
-      "src": "3-shared-v5-maskable-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
     }
   ]
 }
