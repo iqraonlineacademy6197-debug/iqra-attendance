@@ -1,6 +1,6 @@
 {
-  "name": "Iqra Admin",
-  "short_name": "Iqra Admin",
+  "name": "Admin Panel",
+  "short_name": "Admin Panel",
   "description": "IQRA Online Academy admin page",
   "start_url": "./",
   "scope": "./",
