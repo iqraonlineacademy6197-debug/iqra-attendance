@@ -1,6 +1,6 @@
 {
-  "name": "Teachers Report Sheet",
-  "short_name": "Teachers Report",
+  "name": "Attendance Sheet",
+  "short_name": "Attendance Sheet",
   "description": "IQRA Online Academy teacher attendance",
   "start_url": "./",
   "scope": "./",
