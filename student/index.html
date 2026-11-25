@@ -11,20 +11,57 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="DAILY REPORT">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 <style>
   html,body{margin:0;padding:0;height:100%;background:#000;overflow:hidden}
   #frame{position:fixed;inset:0;width:100%;height:100%;border:0;display:block}
+  body.hasbar #frame{top:64px;height:calc(100% - 64px)}
+  #ibar{display:none;position:fixed;top:0;left:0;right:0;height:64px;background:#000;border-bottom:3px solid #0f766e;z-index:20;align-items:center;gap:10px;padding:0 10px;box-sizing:border-box}
+  body.hasbar #ibar{display:flex}
+  #ibar img{width:40px;height:40px;border-radius:50%;flex:none}
+  #ibar .t{flex:1;min-width:0;line-height:1.2}
+  #ibar .n{color:#fff;font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:14px;letter-spacing:.5px;white-space:nowrap}
+  #ibar .m{color:#5eead4;font-family:Arial,sans-serif;font-size:11.5px;margin-top:2px}
+  #ibar button,#ibar a.b{flex:none;background:#0f766e;color:#fff;border:0;border-radius:8px;padding:9px 12px;font:700 13px Arial,sans-serif;text-decoration:none}
+  #ibar .x{background:none!important;color:#9ca3af!important;font-size:20px!important;padding:4px 6px!important}
   #splash{position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:10;transition:opacity .4s}
   #splash img{width:150px;height:150px}
   #splash p{color:#0f766e;font-family:Arial,sans-serif;font-size:13px;letter-spacing:2px;margin-top:10px;font-weight:700}
 </style>
 </head>
 <body>
+<div id="ibar"><img src="1-circ-512.png" alt=""><div class="t"><div class="n">IQRA ONLINE ACADEMY</div><div class="m" id="imsg"></div></div><span id="iact"></span><button class="x" id="iclose" aria-label="Close">&times;</button></div>
 <div id="splash"><img src="1-circ-512.png" alt=""><p>STUDENTS DAILY MONITORING</p></div>
 <iframe id="frame" src="https://script.google.com/macros/s/AKfycbwH-cFacz24HpNXoMNdsvXUXZ1hWgtp-MLJURh-1X7Kqm2rGTT7EjLqFfkQq3LXUdN5/exec" allow="clipboard-write"></iframe>
 <script>
   var f = document.getElementById('frame'), s = document.getElementById('splash');
   f.addEventListener('load', function(){ setTimeout(function(){ s.style.opacity='0'; setTimeout(function(){ s.remove(); }, 450); }, 400); });
+  /* Install banner: Android Chrome button, "Open in Chrome" inside WhatsApp/in-app browsers, Add to Home Screen hint on iPhone */
+  (function(){
+    var bar = document.getElementById('ibar'), msg = document.getElementById('imsg'), act = document.getElementById('iact');
+    var standalone = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+    var ua = navigator.userAgent || '', deferred = null;
+    try { if (localStorage.getItem('iqra_ib') > Date.now()) return; } catch (e) {}
+    if (standalone) return;
+    function show(text, html){ msg.textContent = text; act.innerHTML = html || ''; document.body.classList.add('hasbar'); }
+    document.getElementById('iclose').onclick = function(){ document.body.classList.remove('hasbar'); try { localStorage.setItem('iqra_ib', String(Date.now() + 3*86400000)); } catch (e) {} };
+    window.addEventListener('appinstalled', function(){ document.body.classList.remove('hasbar'); });
+    var isIOS = /iPhone|iPad|iPod/i.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+    var inApp = /WhatsApp|FBAN|FBAV|Instagram|Line\/|; wv\)/i.test(ua);
+    if (isIOS) { show('Share (⬆) അമർത്തി "Add to Home Screen" തിരഞ്ഞെടുക്കൂ'); return; }
+    if (/Android/i.test(ua) && inApp) {
+      var u = location.host + location.pathname + location.search;
+      show('Install ചെയ്യാൻ Chrome-ൽ തുറക്കൂ', '<a class="b" id="ichr" href="intent://' + u + '#Intent;scheme=https;package=com.android.chrome;end">Open in Chrome</a>');
+      return;
+    }
+    window.addEventListener('beforeinstallprompt', function(e){
+      e.preventDefault(); deferred = e;
+      show('ഫോണിൽ ആപ്പ് ആയി ഉപയോഗിക്കാം', '<button id="iins">Install app</button>');
+      document.getElementById('iins').onclick = function(){
+        deferred.prompt(); deferred.userChoice.then(function(){ deferred = null; document.body.classList.remove('hasbar'); });
+      };
+    });
+  })();
   if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js').catch(function(){}); }
 </script>
 </body>
