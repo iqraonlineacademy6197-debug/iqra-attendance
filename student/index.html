@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IQRA Daily Monitoring</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f766e">
+<link rel="icon" href="8-student-192.png">
+<link rel="apple-touch-icon" href="7-student-180.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="IQRA Daily">
+<style>
+  html,body{margin:0;padding:0;height:100%;background:#fff;overflow:hidden}
+  #frame{position:fixed;inset:0;width:100%;height:100%;border:0;display:block}
+  #splash{position:fixed;inset:0;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:10;transition:opacity .4s}
+  #splash img{width:150px;height:150px}
+  #splash p{color:#0f766e;font-family:Arial,sans-serif;font-size:13px;letter-spacing:2px;margin-top:10px;font-weight:700}
+</style>
+</head>
+<body>
+<div id="splash"><img src="8-student-192.png" alt=""><p>STUDENTS DAILY MONITORING</p></div>
+<iframe id="frame" src="https://script.google.com/macros/s/AKfycbwH-cFacz24HpNXoMNdsvXUXZ1hWgtp-MLJURh-1X7Kqm2rGTT7EjLqFfkQq3LXUdN5/exec" allow="clipboard-write"></iframe>
+<script>
+  var f = document.getElementById('frame'), s = document.getElementById('splash');
+  f.addEventListener('load', function(){ setTimeout(function(){ s.style.opacity='0'; setTimeout(function(){ s.remove(); }, 450); }, 400); });
+  if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js').catch(function(){}); }
+</script>
+</body>
+</html>
